@@ -1,0 +1,64 @@
+*bats.txt* Run Bats tests from Vim.
+
+==============================================================================
+
+INTRODUCTION                                                              *bats*
+
+A simple way to envoke Bats tests from Vim.
+
+Repo: https://github.com/jbboynton/vim-bats
+
+==============================================================================
+
+FUNCTIONS                                                       *bats-functions*
+
+Tests can be excuted with one of the following functions.
+
+                                                          *bats-:RunBatsTests()*
+:RunBatsTests()          Run all the tests.
+
+                         Equivalent to running:
+>
+                           bats test/**/*.bats
+<
+                                                    *bats-:RunCurrentBatsTest()*
+:RunCurrentBatsTest()    If the current file is a test file, run all examples
+                         in the file.
+
+                         Equivalent to running:
+>
+                           bats test/current_test.bats
+<
+                         If the current file is not a test file, run the
+                         |last-test| again.
+
+                                             *last-test* *bats-:RunLastBatsTest()*
+:RunLastBatsTest()       When |:RunBatsTests()| or |:RunCurrentBatsTest()| is
+                         called, the command is recorded. This function
+                         re-runs the recorded command.
+
+==============================================================================
+
+KEY MAPPINGS                                                 *bats-key-mappings*
+
+This plugin doesn't define any key mappings by default.
+
+Suggested key mappings:
+>
+  map <Leader>ba :call RunBatsTests()<CR>
+  map <Leader>bc :call RunCurrentBatsTest()<CR>
+  map <Leader>bl :call RunLastBatsTest()<CR>
+<
+==============================================================================
+
+CUSTOM COMMAND                                *bats_command* *bats-custom-command*
+
+Tests use the following command by default:
+>
+  bats {test}
+<
+Commands can be customized by overwriting the `g:bats_command` variable:
+>
+  let g:bats_command = Dispatch bats {test}
+<
+vim:tw=78:et:ft=help:norl:
