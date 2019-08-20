@@ -1,12 +1,10 @@
-" Load Bash syntax
+" Load Bash syntax.
 let g:is_bash=1
 runtime! syntax/sh.vim
 unlet b:current_syntax
 
-syntax match batsTest "\v\@test"
-
-" hi def link batsTest Identifier
-" hi def link batsKeyword Keyword
+" Define Bats custom keywords. :h :syn-define
+syntax match batsTestKeyword "\v\@test"
 
 syntax keyword batsFileFunction	load
 
@@ -24,13 +22,10 @@ syntax keyword batsAssertions	refute_line containedin=shExpr contained
 syntax keyword batsAssertions	assert_file_exist containedin=shExpr contained
 syntax keyword batsAssertions	assert_file_not_exist containedin=shExpr contained
 
-" Link the colors to the existing group name. :h group-name
-" TODO(ad): Choose better links?
-highlight default link batsTestKeyword Identifier
+highlight default link batsTestKeyword	Identifier
 highlight default link batsFileFunction	Function
 highlight default link batsTestFunction	Function
 highlight default link batsAssertions	Function
 
 " Set the current syntax as Bats.
 let b:current_syntax = 'bats'
-
