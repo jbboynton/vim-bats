@@ -74,7 +74,7 @@ function! s:CurrentDirectory()
   return expand("%:p:h")
 endfunction
 
-function! s:ProjectRoot()
+function! s:ProjectRoot() abort
   let l:git_directory = system("git rev-parse --show-toplevel")[:-2]
   let l:not_in_repo = matchstr(l:git_directory, '^fatal:.*')
 
@@ -86,7 +86,7 @@ function! s:ProjectRoot()
       \ "issue by assigning g:bats_directory to the path to your tests " .
       \ "directory."
 
-    echohl Error
+    echohl ErrorMsg
     echom l:message
     echohl None
 
