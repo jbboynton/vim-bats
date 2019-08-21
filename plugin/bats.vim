@@ -83,7 +83,7 @@ function! s:ProjectRoot()
   return fnameescape(l:git_directory)
 endfunction
 
-function! s:RaiseUnlessRepoExists(repo_exists) abort
+function! s:RaiseUnlessRepoExists(repo_exists)
   if !empty(a:repo_exists)
     return 1
   endif
