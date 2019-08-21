@@ -76,7 +76,7 @@ endfunction
 
 function! s:ProjectRoot()
   let l:git_directory = system("git rev-parse --show-toplevel")[:-2]
-  let l:repo_exists = !filereadable(l:git_directory)
+  let l:repo_exists = filereadable(l:git_directory)
 
   s:RaiseUnlessRepoExists(l:repo_exists)
 
@@ -85,14 +85,14 @@ endfunction
 
 function! s:RaiseUnlessRepoExists(repo_exists)
   if empty(a:repo_exists)
-    return 1
+    let l:message = "Error: unable to locate the tests directory. Fix this " .
+      \ "issue by assigning a value to g:bats_directory. " .
+      \ "See :h bats_directory for more information."
+
+    echohl ErrorMsg
+    echom l:message
+    echohl None
   endif
-
-  let l:message = "Error: unable to locate the tests directory. Fix this " .
-    \ "issue by assigning a value to g:bats_directory. " .
-    \ "See :h bats_directory for more information."
-
-  throw l:message
 endfunction
 
 function! s:DefaultDirectory()
