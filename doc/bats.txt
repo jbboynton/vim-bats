@@ -59,6 +59,23 @@ Tests use the following command by default:
 <
 Commands can be customized by overwriting the `g:bats_command` variable:
 >
-  let g:bats_command = Dispatch bats {test}
+  let g:bats_command = ":Dispatch bats --tap {test}"
 <
+==============================================================================
+
+CUSTOM DIRECTORY                          *bats_directory* *bats-custom-directory*
+
+In order to run the entire test suite, this plugin tries to infer the location
+of the test directory. The plugin looks for the test directory by shelling out
+to find the root of the Git repository (which will obviously fail unless a Git
+repository actually exists). If it succeeds, the plugin assumes that test
+files will be located in a directory named `test`.
+
+If there is no Git repository present, or if tests are located somewhere other
+than inside `test`, then the plugin isn't able to make a reasonable guess
+about where tests will be stored. To get around this limitation, define the
+`g:bats_directory` variable:
+>
+  let g:bats_directory = "path/to/test/directory"
+>
 vim:tw=78:et:ft=help:norl:
