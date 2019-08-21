@@ -76,7 +76,7 @@ endfunction
 
 function! s:ProjectRoot()
   let l:git_directory = system("git rev-parse --show-toplevel")[:-2]
-  let l:repo_exists = filereadable(l:git_directory)
+  let l:repo_exists = !filereadable(l:git_directory)
 
   s:RaiseUnlessRepoExists(l:repo_exists)
 
@@ -84,7 +84,7 @@ function! s:ProjectRoot()
 endfunction
 
 function! s:RaiseUnlessRepoExists(repo_exists)
-  if !empty(a:repo_exists)
+  if empty(a:repo_exists)
     return 1
   endif
 
