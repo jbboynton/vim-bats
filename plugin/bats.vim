@@ -74,26 +74,25 @@ function! s:CurrentDirectory()
   return expand("%:p:h")
 endfunction
 
-function! s:ProjectRoot() abort
+function! s:ProjectRoot()
   let l:git_directory = system("git rev-parse --show-toplevel")[:-2]
   let l:not_in_repo = matchstr(l:git_directory, '^fatal:.*')
 
-  if empty(l:not_in_repo)
-    let l:directory = fnameescape(l:git_directory)
-  else
-    let l:directory = s:CurrentDirectory()
-    let l:message = "Error: unable to locate the tests directory. Fix this " .
-      \ "issue by assigning g:bats_directory to the path to your tests " .
-      \ "directory."
+  s:RaiseUnlessRepoExists(l:not_in_repo)
 
-    echohl ErrorMsg
-    echom l:message
-    echohl None
+  return fnameescape(l:git_directory)
+endfunction
 
-    throw l:message
+function! s:RaiseUnlessRepoExists(not_in_repo) abort
+  if empty(a:not_in_repo)
+    return 1
   endif
 
-  return l:directory
+  let l:message = "Error: unable to locate the tests directory. Fix this " .
+    \ "issue by assigning a value to g:bats_directory. " .
+    \ "See :h bats_directory for more information."
+
+  throw l:message
 endfunction
 
 function! s:DefaultDirectory()
