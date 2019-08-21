@@ -75,8 +75,12 @@ function! s:CurrentDirectory()
 endfunction
 
 function! s:ProjectRoot()
-  let l:git_directory = system("git rev-parse --show-toplevel")[:-2]
-  let l:not_in_repo = matchstr(l:git_directory, '^fatal:.*')
+  try
+    let l:git_directory = system("git rev-parse --show-toplevel")[:-2]
+  catch
+    let l:git_directory = ""
+  endtry
+  let l:not_in_repo = matchstr(l:git_directory, "^fatal:.*")
 
   s:RaiseUnlessRepoExists(l:not_in_repo)
 
